@@ -5,5 +5,10 @@ Simple daemon based on
 gist.  Will update Google's Dynamic DNS record with the external IP of the host
 on which it runs.
 
-Deploy:
-... comming soon
+# Deploy:
+Replace `USERNAME`, `PASSWORD`, and `YOUR_ACTUAL_HOST` below, and run:
+```
+echo USERNAME | docker secret create dyn_dns_user -
+echo PASSWORD | docker secret create dyn_dns_pass -
+curl -sSL https://raw.githubusercontent.com/paullj1/google-dyndns/master/compose.yml | sed 's/yourhost.com/YOUR_ACTUAL_HOST/' | docker stack deploy -c - dyndns
+```
