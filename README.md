@@ -8,7 +8,7 @@ on which it runs.
 # Deploy:
 Replace `USERNAME`, `PASSWORD`, and `YOUR_ACTUAL_HOST` below, and run:
 ```
-echo USERNAME | docker secret create dyn_dns_user -
-echo PASSWORD | docker secret create dyn_dns_pass -
+echo -n USERNAME | docker secret create dyn_dns_user -
+echo -n PASSWORD | docker secret create dyn_dns_pass -
 curl -sSL https://raw.githubusercontent.com/paullj1/google-dyndns/master/compose.yml | sed 's/yourhost.com/YOUR_ACTUAL_HOST/' | docker stack deploy -c - dyndns
 ```
