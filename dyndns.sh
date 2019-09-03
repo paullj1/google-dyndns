@@ -5,13 +5,13 @@ PASSWORD=$(cat /run/secrets/dyn_dns_pass)
 
 while true; do
 
-    PUBLIC_IP=$(curl -s -k https://domains.google.com/checkip)
+    PUBLIC_IP=$(curl -sSL https://domains.google.com/checkip)
     DDNS_IP=$(nslookup ${HOSTNAME} 2> /dev/null | awk '/^Address 1:/ { print $3 }')
 
     if [ "$PUBLIC_IP" != "$DDNS_IP" ]; then
 
         URL="https://domains.google.com/nic/update?hostname=$HOSTNAME&myip=${PUBLIC_IP}"
-        RESP=$(curl -s -k --user "${USERNAME}:${PASSWORD}" "$URL")
+        RESP=$(curl -sSL --user "${USERNAME}:${PASSWORD}" "$URL")
 
         case $RESP in
             "good ${PUBLIC_IP}" | "nochg ${PUBLIC_IP}")
